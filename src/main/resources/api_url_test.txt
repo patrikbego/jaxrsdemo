@@ -1,0 +1,50 @@
+#@PUT
+#@Path("/assign")
+#void assign(@FormParam("taskId") String taskId, List<String> assignees);
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/assign -d "taskId=CT9845"
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/assign -d "{taskId=CT9845}"
+
+#@PUT
+#@Path("/\{taskId\}/complete")
+#void complete(@PathParam("taskId") String taskId, @FormParam("validateTaskData") String validateTaskData);
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/CT9988/complete -d "validateTaskData=complete"
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/CT9988/complete -d '{"validateTaskData":"complete"}'
+
+#@PUT
+#@Path("/save")
+#void save(@FormParam("validateTaskData") String validateTaskData);
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/save -d "validateTaskData=complete"
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://localhost:8680/rest-demo/task/validate/save -d '{"validateTaskData":"complete"}'
+
+#@DELETE
+#@Path("/\{considerationId\}")
+#ResponseInfo<String> remove(@PathParam("considerationId") Long considerationId);
+curl -iv -X DELETE http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/123
+curl -iv -H "Content-Type: application/json" -X DELETE http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/123
+
+#@POST
+#@Path("/share")
+#ResponseInfo<String> share(@FormParam("considerationIds") List<Long> considerationIds);
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X POST http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/share -d "considerationIds=123"
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X POST http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/share  -d '{"considerationIds":"123"}'
+
+#@GET
+#@Path("/\{ctNumber\}/findByCTNumber")
+#String findByCTNumber(@PathParam("ctNumber") String ctNumber);
+curl http://172.17.61.55:7832/ema.demo.api/rest-demo/task/authorise/12341234/findByCTNumber
+curl http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/12341234/findByCTNumber
+
+
+curl http://localhost:8680/rest-demo/task/validate/12341234/findByCTNumber
+curl http://localhost:8680/rest-demo/task/authorise/share
+http://localhost:8680/rest-demo/task/authorise/assign
+
+
+curl -v -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://localhost:8680/rest-demo/task/validate/CT9988/complete -d "{validateTaskData=complete"
+
+
+
+#NOTOK
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X PUT http://172.17.61.55:7832/ema.demo.api/rest-demo/task/validate/assign -d "taskId=CT9845"
+
+curl -iv -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:7001/ema.demo.api/rest-demo/task/validate/share  -d '{"considerationIds":"123"}'
